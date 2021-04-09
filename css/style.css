@@ -208,7 +208,10 @@ body {
 
     list-style-type: none;
     display: flex;
-    align-items: center
+    flex-basis: 100%;
+    align-items: center;
+    padding: 0 20px;
+    color: #919191;
 } 
 
 .wrapper-chats .user-info > .contact-image {
@@ -225,10 +228,14 @@ body {
 
 .wrapper-chats .user-info > .contact-name {
 
-    background-color: red;
+    color: #222;
     flex-grow: 1;
 }
 
+.wrapper-chats .user-info > * {
+
+    margin: 0 10px;
+}
 
 .wrapper-chats > .messages {
 
