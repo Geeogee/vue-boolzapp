@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boolzapp - VueJS</title>
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
     <!-- Vue -->
@@ -14,10 +19,72 @@
 </head>
 <body>
 
-    <div id="app">
+    <div class="container">
 
-        {{ test }}
-    </div>
+        <div id="app" class="wrapper-web">
+
+            <!-- Sidebar menu -->
+            <aside class="sidebar-menu">
+                
+                <nav class="menu-nav-links">
+
+                    <ul class="nav-links">
+                        <li id="profile-image">
+                            <div class="contact-image">
+                                <img src="img/profile.jpg">
+                            </div>
+                        </li>
+
+                        <li>
+                            <i class="fas fa-circle-notch"></i>
+                        </li>
+
+                        <li>
+                            <i class="fas fa-comment-alt"></i>
+                        </li>
+
+                        <li>
+                            <i class="fas fa-ellipsis-v"></i>
+                        </li>
+                    </ul>
+                
+                </nav>
+
+                <div class="wrapper-search-bar">
+
+                    <button id="button-filter-chat">
+                        <i class="fas fa-search"></i>
+                        <span>Cerca o inizia una nuova chat</span>
+                    </button>
+
+                </div>
+
+                <ul class="wrapper-contacts">
+
+                    <li @click="showChat(index)" v-for="(contact,index) in contacts" class="chat-preview">
+                        <div class="contact-image">
+                            <img :src="contact.avatar">
+                        </div>
+
+                        <div class="contact-chat">
+                            {{contact.name}}
+                        </div>
+                    </li>
+
+                </ul>
+
+            </aside> <!-- end sidebar menu -->
+
+            <div class="wrapper-chats">
+
+                <div v-for="message in activeChat" :class="(message.status == 'received') ? 'received' : 'sent'" class="messages">
+                    {{ message.text }}
+                </div>
+
+            </div>
+            
+        </div>
+    </div>  
     
 </body>
 </html>
