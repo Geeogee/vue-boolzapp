@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet"> 
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
     <!-- Vue -->
@@ -75,10 +75,32 @@
 
             </aside> <!-- end sidebar menu -->
 
-            <div class="wrapper-chats">
+            <div class="wrapper-chats" v-if="isActive">
 
                 <div v-for="message in activeChat" :class="(message.status == 'received') ? 'received' : 'sent'" class="messages">
                     {{ message.text }}
+                </div>
+
+            </div>
+
+            <div v-else class="wrapper-chats empty">
+
+                <div class="wrapper-intro">
+
+                    <img src="img/keep-connected.jpg">
+
+                    <h2>Mantieni il telefono connesso</h2>
+
+                    <span>
+                        Whatsapp si collega al tuo telefono per sincronizzare i messaggi. Per ridurre l'utilizzo dei dati, collega il telefono al Wi-Fi.
+                    </span>
+
+                    <div id="download-link">
+                        <i class="fas fa-laptop"></i>
+                        Whatsapp è disponibile per Windows. 
+                        <a href="#">Scaricala qui</a>.
+                    </div>
+
                 </div>
 
             </div>

@@ -170,3 +170,43 @@ body {
 
 }
 
+.wrapper-chats.empty {
+
+    justify-content: center;
+    align-items: center;
+    border-bottom: 5px solid #4adf83;
+}
+
+.wrapper-chats.empty > .wrapper-intro {
+
+    max-width: 460px;
+    text-align: center;
+    color: #919191;
+    font-size: 14px;
+}
+
+.wrapper-intro > img {
+
+    max-width: 250px;
+}
+
+.wrapper-intro > h2 {
+
+    font-size: 32px;
+    font-weight: 300;
+    padding: 10px;
+    color: #525252;
+}
+
+#download-link {
+
+    border-top: 1px solid #ededed;
+    margin-top: 30px;
+    padding-top: 30px;
+}
+
+#download-link a {
+
+    color: #25c361; /* #4adf83 */
+    text-decoration: none;
+}

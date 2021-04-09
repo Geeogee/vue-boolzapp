@@ -107,7 +107,8 @@ function initVue() {
 
             ],
 
-            "activeChat" : ""
+            "activeChat" : "",
+            "isActive" : false
         },
 
         methods: {
@@ -117,8 +118,8 @@ function initVue() {
                 const user = this.contacts[index];
                 const messages = user.messages;
                 this.activeChat = messages;
-                console.log("Active chat messages",this.activeChat)
-
+                
+                this.isActive = true;
             }
         }
     })
