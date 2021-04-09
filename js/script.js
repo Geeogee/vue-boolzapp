@@ -108,17 +108,20 @@ function initVue() {
             ],
 
             "activeChat" : "",
-            "isActive" : false
+            "isActive" : false,
+            "currentImage" : "",
+            "currentName" : ""
         },
 
         methods: {
 
-            showChat: function(index) {
+            showChat: function(index,contact) {
 
                 const user = this.contacts[index];
                 const messages = user.messages;
                 this.activeChat = messages;
-                
+                this.currentImage = contact.avatar;
+                this.currentName = contact.name;
                 this.isActive = true;
             }
         }

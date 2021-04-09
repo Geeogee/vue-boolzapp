@@ -61,7 +61,7 @@
 
                 <ul class="wrapper-contacts">
 
-                    <li @click="showChat(index)" v-for="(contact,index) in contacts" class="chat-preview">
+                    <li @click="showChat(index,contact)" v-for="(contact,index) in contacts" class="chat-preview">
                         <div class="contact-image">
                             <img :src="contact.avatar">
                         </div>
@@ -77,8 +77,36 @@
 
             <div class="wrapper-chats" v-if="isActive">
 
-                <div v-for="message in activeChat" :class="(message.status == 'received') ? 'received' : 'sent'" class="messages">
-                    {{ message.text }}
+                <div class="chat-bar top-bar">
+
+                    <ul class="user-info">
+                        <li class="contact-image">
+                            <img :src="currentImage">
+                        </li>
+
+                        <li id="contact-name">
+                            {{ currentName }}
+                        </li>
+
+                        <li>
+                            <i class="fas fa-search"></i>
+                        </li>
+
+                        <li>
+                            <i class="fas fa-ellipsis-v"></i>
+                        </li>
+                    </ul>
+ 
+                </div>
+
+                <div class="messages">
+                    <div v-for="message in activeChat" :class="(message.status == 'received') ? 'received' : 'sent'" class="message">
+                        {{ message.text }}
+                    </div>
+                </div>
+
+                <div class="chat-bar bottom-bar">
+
                 </div>
 
             </div>

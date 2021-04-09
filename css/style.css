@@ -151,34 +151,17 @@ body {
     flex-grow: 1;
 }
 
-.messages {
-    padding: 10px;
-    border-radius: 10px;
-    margin: 2px 120px;
-}
-
-.messages.received {
-
-    align-self: flex-start;
-    background-color: #FFF;
-}
-
-.messages.sent {
-
-    align-self: flex-end;
-    background-color: #dcf8c6;
-
-}
+/* INTRO (NO ACTIVE CHAT) */
 
 .wrapper-chats.empty {
-
+    
     justify-content: center;
     align-items: center;
     border-bottom: 5px solid #4adf83;
 }
 
 .wrapper-chats.empty > .wrapper-intro {
-
+    
     max-width: 460px;
     text-align: center;
     color: #919191;
@@ -186,12 +169,12 @@ body {
 }
 
 .wrapper-intro > img {
-
+    
     max-width: 250px;
 }
 
 .wrapper-intro > h2 {
-
+    
     font-size: 32px;
     font-weight: 300;
     padding: 10px;
@@ -199,14 +182,79 @@ body {
 }
 
 #download-link {
-
+    
     border-top: 1px solid #ededed;
     margin-top: 30px;
     padding-top: 30px;
 }
 
 #download-link a {
-
+    
     color: #25c361; /* #4adf83 */
     text-decoration: none;
 }
+
+/* ACTIVE CHAT */
+
+.wrapper-chats > .chat-bar {
+
+    background-color: #ededed;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.wrapper-chats .user-info {
+
+    list-style-type: none;
+    display: flex;
+    align-items: center
+} 
+
+.wrapper-chats .user-info > .contact-image {
+
+    width: 40px;
+    height: 40px;
+}
+
+.wrapper-chats .user-info > .contact-image > img {
+
+    width: 40px;
+    height: 40px;
+}
+
+.wrapper-chats .user-info > .contact-name {
+
+    background-color: red;
+    flex-grow: 1;
+}
+
+
+.wrapper-chats > .messages {
+
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-image: url("../img/doodle-wallpaper.png");
+    background-size: 50%;
+    background-repeat: repeat-x;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 10px;
+    margin: 2px 120px;
+}
+
+.message.received {
+
+    align-self: flex-start;
+    background-color: #FFF;
+}
+
+.message.sent {
+
+    align-self: flex-end;
+    background-color: #dcf8c6;
+}
+
