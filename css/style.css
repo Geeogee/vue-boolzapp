@@ -104,17 +104,38 @@ body {
 
     background-color: #f6f6f6;
     padding: 10px;
+    display: flex;
+    align-items: center;
+    
 }
 
-.wrapper-search-bar > #button-filter-chat {
+
+.wrapper-search-bar > .wrapper-icon {
+    background-color: #FFF;
+    padding: 10px;
+    font-size: 12px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    color: #919191;
+}
+
+
+.wrapper-search-bar > #text-filter-chat {
 
     width: 100%;
     padding: 10px;
     background-color: #ffffff;
     color: #919191;
     border: 0;
-    border-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
+
+#text-filter-chat:focus {
+
+    outline: 0;
+}
+
 
 /* SIDEBAR CHATS LIST */
 

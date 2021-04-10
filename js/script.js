@@ -123,6 +123,7 @@ function initVue() {
             },
 
             "messageText" : "",
+            "filterKey" : ""
         },
 
         methods: {
@@ -130,6 +131,14 @@ function initVue() {
             showChat: function(contact) {
 
                 this.activeUser = contact;
+            },
+
+            filterChats: function() {
+
+                return this.contacts.filter(contact => {
+
+                    return contact.name.toLowerCase().includes(this.filterKey.toLowerCase())
+                })
             },
 
             sendMessage: function() {

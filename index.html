@@ -52,16 +52,18 @@
 
                 <div class="wrapper-search-bar">
 
-                    <button id="button-filter-chat">
+                    <div class="wrapper-icon">
                         <i class="fas fa-search"></i>
-                        <span>Cerca o inizia una nuova chat</span>
-                    </button>
+                    </div>
+
+                    <input type="text" id="text-filter-chat" placeholder="Cerca o inizia una nuova chat" v-model="filterKey" @change="filterChats">
+                    <!-- <div id="text-filter-chat" contenteditable="true" v-model="test" @keyup="testMe">Cerca o inizia una nuova chat</div> -->
 
                 </div>
 
                 <ul class="wrapper-contacts">
 
-                    <li @click="showChat(contact)" v-for="contact in contacts" class="chat-preview">
+                    <li @click="showChat(contact)" v-for="contact in filterChats()" class="chat-preview">
                         <div class="contact-image">
                             <img :src="contact.avatar">
                         </div>
