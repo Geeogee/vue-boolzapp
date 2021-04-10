@@ -116,12 +116,21 @@
                             <i class="fas fa-paperclip"></i>
                         </li>
 
-                        <li>
-                            <input type="text">
+                        <li id="wrapper-message-box">
+                            <input type="text" v-model="messageText" placeholder="Scrivi un messaggio" @keyup.enter="sendMessage">
                         </li>
 
+                        <li>
+                            <i class="fas fa-microphone"></i>
+                        </li>
 
-                        <li></li>
+                        <li id="wrapper-send-message">
+                            <svg @click="sendMessage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="send-message">
+                                <path fill="currentColor" d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z">
+                                </path>
+                            </svg>
+                            <!-- <i class="fas fa-paper-plane"></i> -->
+                        </li>
                     </ul>
 
                 </div>

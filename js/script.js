@@ -107,7 +107,22 @@ function initVue() {
 
             ],
 
-            "activeUser" : ""
+            "activeUser" : "",
+            "messageToSend" : {
+
+                "date" : "",
+                "text" : "",
+                "status" : "sent"
+            },
+
+            "messageReceived" : {
+
+                "date": "",
+                "text" : "Ok!",
+                "status" : "received"
+            },
+
+            "messageText" : "",
         },
 
         methods: {
@@ -115,6 +130,50 @@ function initVue() {
             showChat: function(contact) {
 
                 this.activeUser = contact;
+            },
+
+            sendMessage: function() {
+
+                if (this.messageText.length > 0) {
+
+                    this.messageToSend.text = this.messageText;
+                    let time = this.getTodayDate();
+                    this.messageToSend.date = time;
+                    this.activeUser.messages.push(this.messageToSend);
+                    setTimeout(this.receivedMessage, 2000);
+                    
+                }
+            },
+
+            receivedMessage: function() {
+
+                const time = this.getTodayDate();
+                this.messageReceived.date = time;
+                this.activeUser.messages.push(this.messageReceived)
+
+            },
+
+            getTodayDate: function() {
+                
+                const time = new Date();
+                let seconds = this.getDateFormat(time.getSeconds()).toString();
+                let minutes = this.getDateFormat(time.getMinutes()).toString();
+                let hours = this.getDateFormat(time.getHours()).toString();
+                let year = this.getDateFormat(time.getFullYear()).toString();
+                let months = this.getDateFormat(time.getMonth() + 1).toString();
+                let day = this.getDateFormat(time.getDate()).toString(); 
+
+                return `${day}/${months}/${year} ${hours}:${minutes}:${seconds}`
+            },
+
+            getDateFormat: function(value) {
+
+                if (value < 10) {
+
+                    value = "0" + value;
+                }
+
+                return value;
             }
         }
     })

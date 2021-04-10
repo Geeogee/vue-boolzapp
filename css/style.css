@@ -245,9 +245,11 @@ body {
     background-image: url("../img/doodle-wallpaper.png");
     background-size: 50%;
     background-repeat: repeat-x;
+    overflow: auto;
 }
 
 .message {
+
     padding: 10px;
     border-radius: 10px;
     margin: 2px 120px;
@@ -265,3 +267,48 @@ body {
     background-color: #dcf8c6;
 }
 
+.wrapper-chats .chat-actions {
+
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    flex-basis: 100%;
+    font-size: 25px;
+    color: #919191;
+}
+
+.chat-actions > * {
+
+    margin: 20px;
+}
+
+.chat-actions #wrapper-message-box {
+
+    flex-grow: 1;
+}
+
+#wrapper-message-box input[type="text"] {
+
+    width: 100%;
+    border: 0;
+    background-color: #FFF;
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+
+#wrapper-message-box input[type="text"]:focus {
+
+    outline: 0;
+}
+
+#send-message {
+
+    width: 25px;
+    height: 25px;
+}
+
+#wrapper-send-message {
+    
+    display: flex;
+    align-items: center;
+}
