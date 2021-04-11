@@ -101,10 +101,10 @@
  
                 </div>
 
-                <div class="messages" @click="closeAll">
-                    <div @mouseleave="hideChevron(message)" @mouseenter="showChevron(message)" v-for="(message,index) in activeUser.messages" :class="(message.status == 'received') ? 'received' : 'sent'" class="message">
+                <div class="messages" @click="closeAll" >
+                    <div @click.stop @mouseleave="hideChevron(message)" @mouseenter="showChevron(message)" v-for="(message,index) in activeUser.messages" :class="(message.status == 'received') ? 'received' : 'sent'" class="message">
                         {{ message.text }}
-                        <i :class="(message.chevron) ? 'fas fa-chevron-down active' : 'fas fa-chevron-down'" @click="showMessageInfo(message)" @click.stop></i>
+                        <i :class="(message.chevron) ? 'fas fa-chevron-down active' : 'fas fa-chevron-down'" @click="showMessageInfo(message,index)"></i>
                         <div :class="(message.info) ? 'message-info active' : 'message-info'">
                             <ul>
                                 <li @click="removeMessage(index)" id="remove-message">Elimina messaggio</li>

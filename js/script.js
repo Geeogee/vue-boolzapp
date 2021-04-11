@@ -150,9 +150,7 @@ function initVue() {
             },
 
             "messageText" : "",
-            "filterKey" : "",
-            "messageClicked": false,
-            
+            "filterKey" : "",  
         },
 
         methods: {
@@ -186,6 +184,11 @@ function initVue() {
             removeMessage: function(index) {
 
                 this.activeUser.messages.splice(index,1);
+                if (this.activeUser.messages.length == 0) {
+
+                    this.activeUser = "";
+                    this.contacts.splice(index,1)
+                }
             },
 
             showChevron: function(message) {
@@ -208,12 +211,23 @@ function initVue() {
                         message.info = false;
                         message.chevron = false;
                     }
-                })
+                });
+
             },
 
-            showMessageInfo: function(message) {
+            showMessageInfo: function(messageActive) {
 
-                message.info = !message.info;
+                this.activeUser.messages.forEach(message => {
+
+                    if (message != messageActive) {
+
+                        if (message.info) {
+                            message.info = false;
+                        }
+                    }
+                });
+                
+                messageActive.info = !messageActive.info;
             },
 
             getTodayDate: function() {
