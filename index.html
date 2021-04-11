@@ -63,7 +63,7 @@
 
                 <ul class="wrapper-contacts">
 
-                    <li @click="showChat(contact)" v-for="contact in filterChats()" class="chat-preview">
+                    <li @click="showChat(contact)" v-for="contact in filterChats" class="chat-preview">
                         <div class="contact-image">
                             <img :src="contact.avatar">
                         </div>
@@ -101,9 +101,15 @@
  
                 </div>
 
-                <div class="messages">
-                    <div v-for="message in activeUser.messages" :class="(message.status == 'received') ? 'received' : 'sent'" class="message">
+                <div class="messages" @click="closeAll">
+                    <div @mouseleave="hideChevron(message)" @mouseenter="showChevron(message)" v-for="(message,index) in activeUser.messages" :class="(message.status == 'received') ? 'received' : 'sent'" class="message">
                         {{ message.text }}
+                        <i :class="(message.chevron) ? 'fas fa-chevron-down active' : 'fas fa-chevron-down'" @click="showMessageInfo(message)" @click.stop></i>
+                        <div :class="(message.info) ? 'message-info active' : 'message-info'">
+                            <ul>
+                                <li @click="removeMessage(index)" id="remove-message">Elimina messaggio</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 

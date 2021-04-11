@@ -15,19 +15,25 @@ function initVue() {
                         {
                             "date" : "10/04/2021 15:30:55",
                             "text" : "Hai portato a spasso il cane?",
-                            "status" : "sent"
+                            "status" : "sent",
+                            "chevron" : false,
+                            "info" : false
                         },
 
                         {
                             "date" : "10/04/2021 15:32:00",
                             "text" : "Ricordati anche di dargli da mangiare!",
-                            "status" : "sent"
+                            "status" : "sent",
+                            "chevron" : false,
+                            "info" : false
                         },
 
                         {
                             "date" : "10/04/2021 15:50:00",
                             "text" : "Si, tranquillo!",
-                            "status" : "received"
+                            "status" : "received",
+                            "chevron" : false,
+                            "info" : false
                         }
                     ]
                 },
@@ -39,19 +45,25 @@ function initVue() {
                         {
                             "date" : "10/04/2021 17:30:55",
                             "text" : "Stasera quindi usciamo?",
-                            "status" : "sent"
+                            "status" : "sent",
+                            "chevron" : false,
+                            "info" : false
                         },
 
                         {
                             "date" : "10/04/2021 17:31:10",
                             "text" : "Ci vediamo al bar.",
-                            "status" : "received"
+                            "status" : "received",
+                            "chevron" : false,
+                            "info" : false
                         },
 
                         {
                             "date" : "10/04/2020 17:50:00",
                             "text" : "Perfetto!",
-                            "status" : "received"
+                            "status" : "received",
+                            "chevron" : false,
+                            "info" : false
                         }
                     ]
                 },
@@ -63,19 +75,25 @@ function initVue() {
                         {
                             "date" : "10/04/2021 19:00:07",
                             "text" : "Hai sentito Gino?",
-                            "status" : "received"
+                            "status" : "received",
+                            "chevron" : false,
+                            "info" : false
                         },
 
                         {
                             "date" : "10/04/2021 19:15:10",
                             "text" : "Siamo al Coppa, sbrigati.",
-                            "status" : "sent"
+                            "status" : "sent",
+                            "chevron" : false,
+                            "info" : false
                         },
 
                         {
                             "date" : "10/04/2020 19:16:00",
                             "text" : "Scendo e arrivo! Ordinate anche per me!",
-                            "status" : "received"
+                            "status" : "received",
+                            "chevron" : false,
+                            "info" : false
                         }
                     ]
                 },
@@ -87,23 +105,28 @@ function initVue() {
                         {
                             "date" : "11/04/2021 9:00:00",
                             "text" : "Stai ancora dormendo?",
-                            "status" : "received"
+                            "status" : "received",
+                            "chevron" : false,
+                            "info" : false
                         },
 
                         {
                             "date" : "11/04/2021 9:00:10",
                             "text" : "Chi dorme non piglia pesci!",
-                            "status" : "received"
+                            "status" : "received",
+                            "chevron" : false,
+                            "info" : false
                         },
 
                         {
                             "date" : "11/04/2020 12:44:10",
                             "text" : "Buongiorno!",
-                            "status" : "sent"
+                            "status" : "sent",
+                            "chevron" : false,
+                            "info" : false
                         }
                     ]
                 },
-
 
             ],
 
@@ -112,18 +135,24 @@ function initVue() {
 
                 "date" : "",
                 "text" : "",
-                "status" : "sent"
+                "status" : "sent",
+                "info" : false,
+                "chevron" : false
             },
 
             "messageReceived" : {
 
                 "date": "",
                 "text" : "Ok!",
-                "status" : "received"
+                "status" : "received",
+                "info" : false,
+                "chevron" : false
             },
 
             "messageText" : "",
-            "filterKey" : ""
+            "filterKey" : "",
+            "messageClicked": false,
+            
         },
 
         methods: {
@@ -131,14 +160,6 @@ function initVue() {
             showChat: function(contact) {
 
                 this.activeUser = contact;
-            },
-
-            filterChats: function() {
-
-                return this.contacts.filter(contact => {
-
-                    return contact.name.toLowerCase().includes(this.filterKey.toLowerCase())
-                })
             },
 
             sendMessage: function() {
@@ -162,6 +183,39 @@ function initVue() {
 
             },
 
+            removeMessage: function(index) {
+
+                this.activeUser.messages.splice(index,1);
+            },
+
+            showChevron: function(message) {
+
+                message.chevron = true;    
+            },
+
+            hideChevron: function(message) {
+
+                if (!message.info) {
+                    message.chevron = false
+                }
+            },
+
+            closeAll: function() {
+
+                this.activeUser.messages.forEach(message => {
+
+                    if(message.info) {
+                        message.info = false;
+                        message.chevron = false;
+                    }
+                })
+            },
+
+            showMessageInfo: function(message) {
+
+                message.info = !message.info;
+            },
+
             getTodayDate: function() {
                 
                 const time = new Date();
@@ -183,6 +237,19 @@ function initVue() {
                 }
 
                 return value;
+            }
+        },
+
+
+
+        computed: {
+
+            filterChats: function() {
+
+                return this.contacts.filter(contact => {
+
+                    return contact.name.toLowerCase().includes(this.filterKey.toLowerCase())
+                });
             }
         }
     })
