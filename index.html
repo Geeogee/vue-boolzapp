@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boolzapp - VueJS</title>
+
     <!-- Font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- Google Fonts -->
@@ -12,10 +13,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet"> 
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
+
     <!-- Vue -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
     <!-- Script -->
     <script src="js/script.js"></script>
+
 </head>
 <body>
 
@@ -26,13 +29,16 @@
             <!-- Sidebar menu -->
             <aside class="sidebar-menu">
                 
+                <!-- Profile -->
                 <nav class="menu-nav-links">
 
                     <ul class="nav-links">
                         <li id="profile-image">
+
                             <div class="contact-image">
                                 <img src="img/profile.jpg">
                             </div>
+
                         </li>
 
                         <li>
@@ -50,6 +56,7 @@
                 
                 </nav>
 
+                <!-- Filter bar -->
                 <div class="wrapper-search-bar">
 
                     <div class="wrapper-icon">
@@ -57,44 +64,48 @@
                     </div>
 
                     <input type="text" id="text-filter-chat" placeholder="Cerca o inizia una nuova chat" v-model="filterKey" @change="filterChats">
-                    <!-- <div id="text-filter-chat" contenteditable="true" v-model="test" @keyup="testMe">Cerca o inizia una nuova chat</div> -->
 
                 </div>
 
+                <!-- Active chats list -->
                 <ul class="wrapper-contacts">
 
-                    <li @click="showChat(contact)" v-for="contact in filterChats" class="chat-preview">
+                    <!-- User preview -->
+                    <li @click="showChat(contact)" v-for="(contact,index) in filterChats" class="chat-preview" :class="(contact == activeUser) ? 'active' : ''">
+
+                        <!-- Profile image -->
                         <div class="contact-image">
                             <img :src="contact.avatar">
                         </div>
 
+                        <!-- Chat preview (chat name, last message and time) -->
                         <div class="contact-preview">
 
-                            <div class="contact-name">
-                                <div class="contact-chat">
+                            <div class="contact-chat">
 
-                                    {{ contact.name }}
-                                    
+                                <div class="contact-name">
+                                    {{ contact.name }}     
                                 </div>
 
                                 <div class="last-message">
                                     {{ userMessagePreview(contact) }}
                                 </div>
-                            </div>
 
+                            </div>
 
                             <div class="date-preview">
                                 {{ userDatePreview(contact) }}
                             </div>
+
                         </div>
 
-                        
                     </li>
 
                 </ul>
 
             </aside> <!-- end sidebar menu -->
 
+            <!-- Active chat -->
             <div class="wrapper-chats" v-if="activeUser">
 
                 <div class="chat-bar top-bar">
@@ -119,7 +130,7 @@
  
                 </div>
 
-                <div class="messages" @click="closeAll" >
+                <div id="wrapper-messages" class="messages" @click="closeAll" >
 
                     <div @click.stop @mouseenter="showChevron(message)" @mouseleave="hideChevron(message)" v-for="(message,index) in activeUser.messages" class="message" :class="(message.status == 'received') ? 'received' : 'sent'">
                         
@@ -133,13 +144,14 @@
                             </div>
 
                             <i :class="(message.chevron) ? 'fas fa-chevron-down active' : 'fas fa-chevron-down'" @click="showMessageInfo(message,index)"></i>
+                            
+                            <div :class="(message.info) ? 'message-info active' : 'message-info'">
+                                <ul>
+                                    <li @click="removeMessage(index)" id="remove-message">Elimina messaggio</li>
+                                </ul>
+                            </div>
                         </div>
                         
-                        <div :class="(message.info) ? 'message-info active' : 'message-info'">
-                            <ul>
-                                <li @click="removeMessage(index)" id="remove-message">Elimina messaggio</li>
-                            </ul>
-                        </div>
                     </div>
 
                 </div>
@@ -156,7 +168,7 @@
                         </li>
 
                         <li id="wrapper-message-box">
-                            <input type="text" v-model="messageText" placeholder="Scrivi un messaggio" @keyup.enter="sendMessage">
+                            <input type="text" ref="messageText" v-model="messageText" placeholder="Scrivi un messaggio" @keyup.enter="sendMessage">
                         </li>
 
                         <li>
@@ -176,6 +188,7 @@
 
             </div>
 
+            <!-- Intro (no active chat) -->
             <div v-else class="wrapper-chats empty">
 
                 <div class="wrapper-intro">

@@ -143,6 +143,8 @@ function initVue() {
             showChat: function(contact) {
 
                 this.activeUser = contact;
+                this.$nextTick(() => this.$refs.messageText.focus());
+                
             },
 
             userMessagePreview: function(contact) {
@@ -194,8 +196,8 @@ function initVue() {
 
                 const time = this.getTodayDate();
                 messageReceived.date = time;
-                this.activeUser.messages.push(messageReceived)
-
+                this.activeUser.messages.push(messageReceived);
+            
             },
 
             // Deletes a message
@@ -216,7 +218,6 @@ function initVue() {
             // Shows chevron on mouse enter
             showChevron: function(message) {
 
-                console.log(message);
                 message.chevron = true;            
             },
 
@@ -302,6 +303,12 @@ function initVue() {
                 });
             }
         },
+
+        updated: function() {
+
+            var container = this.$el.querySelector("#wrapper-messages");
+            container.scrollTop = container.scrollHeight;
+        }
 
     })
 }
