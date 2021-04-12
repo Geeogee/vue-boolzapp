@@ -133,7 +133,7 @@ function initVue() {
 
             "activeUser" : "",
             "messageText" : "",
-            "filterKey" : ""
+            "filterKey" : "",
         },
 
         methods: {
@@ -145,12 +145,21 @@ function initVue() {
                 this.activeUser = contact;
             },
 
+            userMessagePreview: function(contact) {
+
+                return contact.messages[contact.messages.length - 1].text.slice(0,15);
+            },
+
+            userDatePreview: function(contact) {
+
+                return contact.messages[contact.messages.length - 1].date.slice(11,16)
+            },
+
             // Send a new message
             sendMessage: function() {
 
                 if (this.messageText.length > 0) {
                     
-                   
                     const messageToSend = {
 
                         "date" : "",

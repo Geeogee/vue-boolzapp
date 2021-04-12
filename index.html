@@ -68,9 +68,27 @@
                             <img :src="contact.avatar">
                         </div>
 
-                        <div class="contact-chat">
-                            {{contact.name}}
+                        <div class="contact-preview">
+
+                            <div class="contact-name">
+                                <div class="contact-chat">
+
+                                    {{ contact.name }}
+                                    
+                                </div>
+
+                                <div class="last-message">
+                                    {{ userMessagePreview(contact) }}
+                                </div>
+                            </div>
+
+
+                            <div class="date-preview">
+                                {{ userDatePreview(contact) }}
+                            </div>
                         </div>
+
+                        
                     </li>
 
                 </ul>
