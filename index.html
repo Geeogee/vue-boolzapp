@@ -102,15 +102,28 @@
                 </div>
 
                 <div class="messages" @click="closeAll" >
-                    <div @click.stop @mouseleave="hideChevron(message)" @mouseenter="showChevron(message)" v-for="(message,index) in activeUser.messages" :class="(message.status == 'received') ? 'received' : 'sent'" class="message">
-                        {{ message.text }}
-                        <i :class="(message.chevron) ? 'fas fa-chevron-down active' : 'fas fa-chevron-down'" @click="showMessageInfo(message,index)"></i>
+
+                    <div @click.stop @mouseenter="showChevron(message)" @mouseleave="hideChevron(message)" v-for="(message,index) in activeUser.messages" class="message" :class="(message.status == 'received') ? 'received' : 'sent'">
+                        
+                        <div>
+                            {{ message.text }}
+                        </div>
+                        
+                        <div id="wrapper-message-infos">
+                            <div id="message-hour" :class="(message.chevron) ? 'hide' : ''">
+                                {{ message.date.slice(11,16)}}
+                            </div>
+
+                            <i :class="(message.chevron) ? 'fas fa-chevron-down active' : 'fas fa-chevron-down'" @click="showMessageInfo(message,index)"></i>
+                        </div>
+                        
                         <div :class="(message.info) ? 'message-info active' : 'message-info'">
                             <ul>
                                 <li @click="removeMessage(index)" id="remove-message">Elimina messaggio</li>
                             </ul>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="chat-bar bottom-bar">

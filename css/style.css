@@ -221,6 +221,7 @@ body {
 
     background-color: #ededed;
     height: 60px;
+    min-height: 60px;
     display: flex;
     align-items: center;
 }
@@ -261,21 +262,34 @@ body {
 .wrapper-chats > .messages {
 
     flex-grow: 1;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     background-image: url("../img/doodle-wallpaper.png");
     background-size: 50%;
     background-repeat: repeat-x;
-    overflow: auto;
 }
 
 .message {
-
+    
     font-size: 14px;
     padding: 10px;
     border-radius: 10px;
     margin: 2px 120px;
     position: relative;
+    max-width: 250px;
+    display: flex;
+    /* longer words break */
+    word-break: break-word; 
+}
+
+#wrapper-message-infos {
+
+    min-width: 40px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 }
 
 .message.received {
@@ -290,6 +304,18 @@ body {
     background-color: #dcf8c6;
 }
 
+#message-hour {
+
+    font-size: 10px;
+    text-align: center;
+}
+
+.hide {
+
+    display: none;
+}
+
+
 .fa-chevron-down {
 
     display: none;
@@ -298,7 +324,7 @@ body {
 .fa-chevron-down.active {
     
     display: inline-block;
-    padding-right: 10px;
+    align-self: flex-start;
 }
 
 .message-info {

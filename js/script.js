@@ -6,6 +6,7 @@ function initVue() {
 
         data: {
 
+            // Contacts array
             contacts: [
 
                 {
@@ -103,7 +104,7 @@ function initVue() {
                     "avatar" : "img/mamma.jpg",
                     "messages" : [
                         {
-                            "date" : "11/04/2021 9:00:00",
+                            "date" : "11/04/2021 09:00:00",
                             "text" : "Stai ancora dormendo?",
                             "status" : "received",
                             "chevron" : false,
@@ -111,7 +112,7 @@ function initVue() {
                         },
 
                         {
-                            "date" : "11/04/2021 9:00:10",
+                            "date" : "11/04/2021 09:00:10",
                             "text" : "Chi dorme non piglia pesci!",
                             "status" : "received",
                             "chevron" : false,
@@ -131,59 +132,71 @@ function initVue() {
             ],
 
             "activeUser" : "",
-            "messageToSend" : {
-
-                "date" : "",
-                "text" : "",
-                "status" : "sent",
-                "info" : false,
-                "chevron" : false
-            },
-
-            "messageReceived" : {
-
-                "date": "",
-                "text" : "Ok!",
-                "status" : "received",
-                "info" : false,
-                "chevron" : false
-            },
-
             "messageText" : "",
-            "filterKey" : "",  
+            "filterKey" : ""
         },
 
         methods: {
 
+
+            // Show active user chat
             showChat: function(contact) {
 
                 this.activeUser = contact;
             },
 
+            // Send a new message
             sendMessage: function() {
 
                 if (this.messageText.length > 0) {
+                    
+                   
+                    const messageToSend = {
 
-                    this.messageToSend.text = this.messageText;
+                        "date" : "",
+                        "text" : "",
+                        "status" : "sent",
+                        "info" : false,
+                        "chevron" : false
+                    }
+
+                    messageToSend.text = this.messageText;
                     let time = this.getTodayDate();
-                    this.messageToSend.date = time;
-                    this.activeUser.messages.push(this.messageToSend);
-                    setTimeout(this.receivedMessage, 2000);
+                    messageToSend.date = time;
+                    this.activeUser.messages.push(messageToSend);
+                    this.messageText = "";
+                    // Message reply after 1 second
+                    setTimeout(this.receivedMessage, 1000);
                     
                 }
             },
 
+            // Create a new received message
             receivedMessage: function() {
 
+                const messageReceived = {
+
+                    "date": "",
+                    "text" : "Ok!",
+                    "status" : "received",
+                    "info" : false,
+                    "chevron" : false
+                }
+
                 const time = this.getTodayDate();
-                this.messageReceived.date = time;
-                this.activeUser.messages.push(this.messageReceived)
+                messageReceived.date = time;
+                this.activeUser.messages.push(messageReceived)
 
             },
 
+            // Deletes a message
             removeMessage: function(index) {
 
                 this.activeUser.messages.splice(index,1);
+
+                // If there are no messages in the active chat
+                // It'll be closed and the user'll be deleted from
+                // Active users list on the left
                 if (this.activeUser.messages.length == 0) {
 
                     this.activeUser = "";
@@ -191,11 +204,14 @@ function initVue() {
                 }
             },
 
+            // Shows chevron on mouse enter
             showChevron: function(message) {
 
-                message.chevron = true;    
+                console.log(message);
+                message.chevron = true;            
             },
 
+            // Hides chevron on mouse leave
             hideChevron: function(message) {
 
                 if (!message.info) {
@@ -203,6 +219,9 @@ function initVue() {
                 }
             },
 
+            // Closes all the message infos open 
+            // When clicking on the div
+            // That contains all the messages
             closeAll: function() {
 
                 this.activeUser.messages.forEach(message => {
@@ -215,6 +234,10 @@ function initVue() {
 
             },
 
+
+            // Shows dropdown menùs for messages
+            // And closes all the others dropdowns
+            // except the one for the clicked message
             showMessageInfo: function(messageActive) {
 
                 this.activeUser.messages.forEach(message => {
@@ -223,6 +246,7 @@ function initVue() {
 
                         if (message.info) {
                             message.info = false;
+                            message.chevron = false;
                         }
                     }
                 });
@@ -230,6 +254,8 @@ function initVue() {
                 messageActive.info = !messageActive.info;
             },
 
+
+            // Creates a dates string
             getTodayDate: function() {
                 
                 const time = new Date();
@@ -243,6 +269,8 @@ function initVue() {
                 return `${day}/${months}/${year} ${hours}:${minutes}:${seconds}`
             },
 
+            // Adds zeros to have the same format
+            // for every date
             getDateFormat: function(value) {
 
                 if (value < 10) {
@@ -254,10 +282,9 @@ function initVue() {
             }
         },
 
-
-
         computed: {
 
+            // Filter chats function
             filterChats: function() {
 
                 return this.contacts.filter(contact => {
@@ -265,7 +292,8 @@ function initVue() {
                     return contact.name.toLowerCase().includes(this.filterKey.toLowerCase())
                 });
             }
-        }
+        },
+
     })
 }
 
