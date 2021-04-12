@@ -131,7 +131,9 @@ function initVue() {
 
             ],
 
+            "activeTab" : "intro",
             "activeUser" : "",
+            "profileUser" : false,
             "messageText" : "",
             "filterKey" : "",
         },
@@ -147,14 +149,27 @@ function initVue() {
                 
             },
 
+            showProfile: function() {
+
+                this.activeTab = "userProfile";
+                
+            },
+
             userMessagePreview: function(contact) {
 
-                return contact.messages[contact.messages.length - 1].text.slice(0,15);
+
+                if(this.contacts.includes(contact)) {
+
+                    return contact.messages[contact.messages.length - 1].text.slice(0,15);
+                }
+               
             },
 
             userDatePreview: function(contact) {
 
-                return contact.messages[contact.messages.length - 1].date.slice(11,16)
+                if (this.contacts.includes(contact)) {
+                    return contact.messages[contact.messages.length - 1].date.slice(11,16);
+                }
             },
 
             // Send a new message
@@ -210,8 +225,8 @@ function initVue() {
                 // Active users list on the left
                 if (this.activeUser.messages.length == 0) {
 
+                    this.contacts.splice(this.contacts.indexOf(this.activeUser),1);
                     this.activeUser = "";
-                    this.contacts.splice(index,1)
                 }
             },
 
@@ -302,13 +317,15 @@ function initVue() {
                     return contact.name.toLowerCase().includes(this.filterKey.toLowerCase())
                 });
             }
-        },
-
-        updated: function() {
-
-            var container = this.$el.querySelector("#wrapper-messages");
-            container.scrollTop = container.scrollHeight;
         }
+
+        // updated: function() {
+
+        //     // Still buggy
+        //     var container = this.$el.querySelector("#wrapper-messages");
+        //     container.scrollTop = container.scrollHeight;
+            
+        // }
 
     })
 }

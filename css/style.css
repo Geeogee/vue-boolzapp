@@ -195,6 +195,14 @@ body {
     font-weight: 400; 
 }
 
+/* SIDEBAR PROFILE */
+
+#profile-heading {
+
+    height: 117px;
+    background-color: #00bfa5;
+}
+
 /* CHAT */
 
 .wrapper-chats {
@@ -328,7 +336,7 @@ body {
     background-color: #dcf8c6;
 }
 
-#wrapper-message-infos {
+.wrapper-message-infos {
 
     min-width: 40px;
     display: flex;
@@ -337,7 +345,7 @@ body {
     position: relative;
 }
 
-#message-hour {
+.message-hour {
 
     font-size: 10px;
     text-align: center;

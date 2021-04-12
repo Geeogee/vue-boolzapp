@@ -27,7 +27,7 @@
         <div id="app" class="wrapper-web">
 
             <!-- Sidebar menu -->
-            <aside class="sidebar-menu">
+            <aside v-if="(activeTab == 'intro')" class="sidebar-menu">
                 
                 <!-- Profile -->
                 <nav class="menu-nav-links">
@@ -36,7 +36,7 @@
                         <li id="profile-image">
 
                             <div class="contact-image">
-                                <img src="img/profile.jpg">
+                                <img src="img/profile.jpg"  @click="showProfile">
                             </div>
 
                         </li>
@@ -105,6 +105,18 @@
 
             </aside> <!-- end sidebar menu -->
 
+            <aside class="sidebar-menu" v-else-if="(activeTab == 'userProfile')">
+
+                <div id="profile-heading">
+                    <i class="fas fa-arrow-left" @click="activeTab = 'intro'"></i>
+                </div>
+
+                <div class="contact-image">
+                    <img src="img/profile.jpg">
+                </div>
+                
+            </aside>
+
             <!-- Active chat -->
             <div class="wrapper-chats" v-if="activeUser">
 
@@ -138,8 +150,8 @@
                             {{ message.text }}
                         </div>
                         
-                        <div id="wrapper-message-infos">
-                            <div id="message-hour" :class="(message.chevron) ? 'hide' : ''">
+                        <div class="wrapper-message-infos">
+                            <div class="message-hour" :class="(message.chevron) ? 'hide' : ''">
                                 {{ message.date.slice(11,16)}}
                             </div>
 
