@@ -105,17 +105,24 @@
 
             </aside> <!-- end sidebar menu -->
 
-            <aside class="sidebar-menu" v-else-if="(activeTab == 'userProfile')">
+            <transition name="slide-fade">
+                <aside class="sidebar-menu" v-if="(activeTab == 'userProfile')">
 
-                <div id="profile-heading">
-                    <i class="fas fa-arrow-left" @click="activeTab = 'intro'"></i>
-                </div>
+                    <div id="profile-heading">
+                        <div class="heading-wrapper">
+                            <i class="fas fa-arrow-left" @click="activeTab = 'intro'"></i>
+                            <h3>Profilo</h2>
+                        </div>
+                    </div>
 
-                <div class="contact-image">
-                    <img src="img/profile.jpg">
-                </div>
-                
-            </aside>
+                    <div class="wrapper-profile-image">
+                        <div class="contact-image">
+                            <img src="img/profile.jpg">
+                        </div>
+                    </div>
+                    
+                </aside>
+            </transition>
 
             <!-- Active chat -->
             <div class="wrapper-chats" v-if="activeUser">
@@ -159,7 +166,7 @@
                             
                             <div :class="(message.info) ? 'message-info active' : 'message-info'">
                                 <ul>
-                                    <li @click="removeMessage(index)" id="remove-message">Elimina messaggio</li>
+                                    <li @click="removeMessage(index)">Elimina messaggio</li>
                                 </ul>
                             </div>
                         </div>

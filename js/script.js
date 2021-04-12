@@ -152,22 +152,20 @@ function initVue() {
             showProfile: function() {
 
                 this.activeTab = "userProfile";
-                
             },
 
             userMessagePreview: function(contact) {
-
 
                 if(this.contacts.includes(contact)) {
 
                     return contact.messages[contact.messages.length - 1].text.slice(0,15);
                 }
-               
             },
 
             userDatePreview: function(contact) {
 
                 if (this.contacts.includes(contact)) {
+
                     return contact.messages[contact.messages.length - 1].date.slice(11,16);
                 }
             },
