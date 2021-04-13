@@ -121,6 +121,24 @@
                             <img src="img/profile.jpg">
                         </div>
                     </div>
+
+                    <div id="profile-name">
+                        <span>Il tuo nome</span>
+                        <div class="wrapper-profile-input">
+                            <input :class="(!nameEditable) ? '' : 'onfocus'" ref="profileName" type="text" v-model="profileName" id="profile-name-text" :readonly="(nameEditable) ? false : true">
+                            <i class="fas fa-pencil-alt" @click="editName" v-if="!nameEditable"></i>
+                            <i class="fas fa-check" v-else  @click="editName"></i>
+                        </div>
+                    </div>
+
+                    <div id="profile-status">
+                        <span>Il tuo stato</span>
+                        <div class="wrapper-profile-input">
+                            <input :class="(!statusEditable) ? '' : 'onfocus'" ref="profileStatus" type="text" v-model="profileStatus" id="profile-status-text" :readonly="(statusEditable) ? false : true">
+                            <i class="fas fa-pencil-alt" @click="editStatus" v-if="!statusEditable"></i>
+                            <i class="fas fa-check" v-else  @click="editStatus"></i>
+                        </div>
+                    </div>
                     
                 </aside>
             </transition>

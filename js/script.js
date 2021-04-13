@@ -136,7 +136,10 @@ function initVue() {
             "profileUser" : false,
             "messageText" : "",
             "filterKey" : "",
-            "filterInput" : ""
+            "profileName" : "Gioele",
+            "nameEditable" : false,
+            "profileStatus" : "Sto dormendo",
+            "statusEditable" : false
         },
 
         methods: {
@@ -299,6 +302,24 @@ function initVue() {
                 }
 
                 return value;
+            },
+
+            editName: function() {
+
+                this.nameEditable = !this.nameEditable;
+                if (this.nameEditable) {
+                    this.$nextTick( () => this.$refs.profileName.focus())
+                }
+                
+            },
+
+            editStatus: function() {
+
+                this.statusEditable = !this.statusEditable;
+                if (this.statusEditable) {
+                    this.$nextTick( () => this.$refs.profileStatus.focus())
+                }
+                
             }
         },
 
