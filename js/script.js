@@ -170,49 +170,47 @@ function initVue() {
                 }
             },
 
+            createNewMessage: function(text,status) {
+
+                const newMessage = {
+
+                    "date" : this.getTodayDate(),
+                    "text" : text,
+                    "status" : status,
+                    "info" : false,
+                    "chevron" : false
+                }
+
+                return newMessage
+            },
+
             // Send a new message
             sendMessage: function() {
 
                 if (this.messageText.length > 0) {
                     
-                    const messageToSend = {
-
-                        "date" : "",
-                        "text" : "",
-                        "status" : "sent",
-                        "info" : false,
-                        "chevron" : false
-                    }
-
-                    messageToSend.text = this.messageText;
-                    let time = this.getTodayDate();
-                    messageToSend.date = time;
-                    this.activeUser.messages.push(messageToSend);
+                    const newMessage = this.createNewMessage(this.messageText, "sent");
+                    this.activeUser.messages.push(newMessage);
                     this.messageText = "";
+
                     // Message reply after 1 second
-                    setTimeout(this.receivedMessage, 1000);
-                    
+                    // ActiveChat contains the chat where the automatic reply
+                    // Will be displayed. Without it, the automatic reply
+                    // will be visualized in the new chat, not in the one
+                    // where the message is sent
+                    const activeChat = this.activeUser; // !important
+                    setTimeout(() => this.receiveMessage(activeChat) , 2000);
                 }
             },
 
             // Create a new received message
-            receivedMessage: function() {
+            receiveMessage: function(activeChat) {
 
-                const messageReceived = {
-
-                    "date": "",
-                    "text" : "Ok!",
-                    "status" : "received",
-                    "info" : false,
-                    "chevron" : false
-                }
-
-                const time = this.getTodayDate();
-                messageReceived.date = time;
-                this.activeUser.messages.push(messageReceived);
-            
+                const newMessage = this.createNewMessage("Ok!" , "received");
+                activeChat.messages.push(newMessage);
             },
 
+        
             // Deletes a message
             removeMessage: function(index) {
 
@@ -282,12 +280,12 @@ function initVue() {
             getTodayDate: function() {
                 
                 const time = new Date();
-                let seconds = this.getDateFormat(time.getSeconds()).toString();
-                let minutes = this.getDateFormat(time.getMinutes()).toString();
-                let hours = this.getDateFormat(time.getHours()).toString();
-                let year = this.getDateFormat(time.getFullYear()).toString();
-                let months = this.getDateFormat(time.getMonth() + 1).toString();
-                let day = this.getDateFormat(time.getDate()).toString(); 
+                let seconds = this.getDateFormat(time.getSeconds());
+                let minutes = this.getDateFormat(time.getMinutes());
+                let hours = this.getDateFormat(time.getHours());
+                let year = this.getDateFormat(time.getFullYear());
+                let months = this.getDateFormat(time.getMonth() + 1);
+                let day = this.getDateFormat(time.getDate()); 
 
                 return `${day}/${months}/${year} ${hours}:${minutes}:${seconds}`
             },
@@ -315,15 +313,14 @@ function initVue() {
                     return contact.name.toLowerCase().includes(this.filterKey.toLowerCase())
                 });
             }
+        },
+
+        updated() {
+
+            // Still doens't recognize absolute menù
+            const container = this.$el.querySelector("#wrapper-messages");
+            container.scrollTop = container.scrollHeight;      
         }
-
-        // updated: function() {
-
-        //     // Still buggy
-        //     var container = this.$el.querySelector("#wrapper-messages");
-        //     container.scrollTop = container.scrollHeight;
-            
-        // }
 
     })
 }

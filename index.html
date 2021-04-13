@@ -27,7 +27,8 @@
         <div id="app" class="wrapper-web">
 
             <!-- Sidebar menu -->
-            <aside v-if="(activeTab == 'intro')" class="sidebar-menu">
+            <transition name="slide-fade">
+            <aside key="1" v-if="(activeTab == 'intro')" class="sidebar-menu">
                 
                 <!-- Profile -->
                 <nav class="menu-nav-links">
@@ -105,8 +106,8 @@
 
             </aside> <!-- end sidebar menu -->
 
-            <transition name="slide-fade">
-                <aside class="sidebar-menu" v-if="(activeTab == 'userProfile')">
+                
+                <aside key="2" class="sidebar-menu" v-else>
 
                     <div id="profile-heading">
                         <div class="heading-wrapper">
