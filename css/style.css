@@ -510,22 +510,49 @@ body {
 
 /* test menu transition */
 
-.slide-enter-active, .slide-leave-active {
-    transition: all .3s;
+.intro-tab {
+
+    position: relative;
 }
 
-.slide-enter-to, .slide-leave {
+.profile-tab {
 
-    opacity: 1;
     position: absolute;
     width: 30%;
 }
 
-.slide-leave-to, .slide-enter {
-    opacity: 0;
-    width: 0;
-}
 
+.slide-enter-active {
+    animation: slide-in .1s;
+  }
+  .slide-leave-active {
+    animation: slide-in .1s reverse;
+  }
+
+  @keyframes slide-in {
+
+    0% {
+      width: 0%;
+    }
+
+    25% {
+
+        width: 7.5%;
+    }
+
+    50% {
+      width: 15%;
+    }
+
+    75% {
+
+        width: 22.5%;
+    }
+
+    100% {
+      width: 30%;
+    }
+  }
 
 
 
