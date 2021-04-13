@@ -240,22 +240,6 @@ function initVue() {
                 }
             },
 
-            // Closes all the message infos open 
-            // When clicking on the div
-            // That contains all the messages
-            closeAll: function() {
-
-                this.activeUser.messages.forEach(message => {
-
-                    if(message.info) {
-                        message.info = false;
-                        message.chevron = false;
-                    }
-                });
-
-            },
-
-
             // Shows dropdown menùs for messages
             // And closes all the others dropdowns
             // except the one for the clicked message
@@ -275,6 +259,20 @@ function initVue() {
                 messageActive.info = !messageActive.info;
             },
 
+            // Closes all the message infos open 
+            // When clicking on the div
+            // That contains all the messages
+            closeAll: function() {
+
+                this.activeUser.messages.forEach(message => {
+
+                    if(message.info) {
+                        message.info = false;
+                        message.chevron = false;
+                    }
+                });
+
+            },
 
             // Creates a dates string
             getTodayDate: function() {
