@@ -136,14 +136,17 @@ function initVue() {
             "profileUser" : false,
             "messageText" : "",
             "filterKey" : "",
-            "profileName" : "Gioele",
-            "nameEditable" : false,
-            "profileStatus" : "Sto dormendo",
-            "statusEditable" : false
+            "userProfile" : {
+
+                "name" : "Gioele",
+                "nameEditable" : false,
+                "profileStatus" : "Sto dormendo",
+                "statusEditable" : false
+            }
+            
         },
 
         methods: {
-
 
             // Show active user chat
             showChat: function(contact) {
@@ -158,21 +161,7 @@ function initVue() {
                 this.activeTab = "userProfile";
             },
 
-            userMessagePreview: function(contact) {
 
-                if(this.contacts.includes(contact)) {
-
-                    return contact.messages[contact.messages.length - 1].text.slice(0,15);
-                }
-            },
-
-            userDatePreview: function(contact) {
-
-                if (this.contacts.includes(contact)) {
-
-                    return contact.messages[contact.messages.length - 1].date.slice(11,16);
-                }
-            },
 
             createNewMessage: function(text,status) {
 
@@ -214,20 +203,11 @@ function initVue() {
                 activeChat.messages.push(newMessage);
             },
 
-        
             // Deletes a message
             removeMessage: function(index) {
 
                 this.activeUser.messages.splice(index,1);
 
-                // If there are no messages in the active chat
-                // It'll be closed and the user'll be deleted from
-                // Active users list on the left
-                if (this.activeUser.messages.length == 0) {
-
-                    this.contacts.splice(this.contacts.indexOf(this.activeUser),1);
-                    this.activeUser = "";
-                }
             },
 
             // Shows chevron on mouse enter
@@ -306,8 +286,8 @@ function initVue() {
 
             editName: function() {
 
-                this.nameEditable = !this.nameEditable;
-                if (this.nameEditable) {
+                this.userProfile.nameEditable = !this.userProfile.nameEditable;
+                if (this.userProfile.nameEditable) {
                     this.$nextTick( () => this.$refs.profileName.focus())
                 }
                 
@@ -315,15 +295,31 @@ function initVue() {
 
             editStatus: function() {
 
-                this.statusEditable = !this.statusEditable;
-                if (this.statusEditable) {
+                this.userProfile.statusEditable = !this.userProfile.statusEditable;
+                if (this.userProfile.statusEditable) {
                     this.$nextTick( () => this.$refs.profileStatus.focus())
                 }
                 
             }
         },
 
-        
+
+        // Functions used to format text
+        filters: {
+
+            lastMessagePreview: function(messages) {
+
+                const lastMessage = messages[messages.length-1].text;
+                return lastMessage.slice(0,15);
+                
+            },
+
+            lastDatePreview: function(messages) {
+
+                const lastMessageDate = messages[messages.length - 1].date;
+                return lastMessageDate.slice(11,16);
+            }
+        },
 
         computed: {
 

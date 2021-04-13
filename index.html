@@ -27,87 +27,87 @@
         <div id="app" class="wrapper-web">
 
             <!-- Sidebar menu -->
-            <transition name="slide-fade">
-            <aside key="1" v-if="(activeTab == 'intro')" class="sidebar-menu">
-                
-                <!-- Profile -->
-                <nav class="menu-nav-links">
+            <transition name="slide">
+                <aside key="0" class="sidebar-menu" v-if="activeTab == 'intro'">
+                    
+                    <!-- Profile -->
+                    <nav class="menu-nav-links">
 
-                    <ul class="nav-links">
-                        <li id="profile-image">
+                        <ul class="nav-links">
+                            <li id="profile-image">
 
-                            <div class="contact-image">
-                                <img src="img/profile.jpg"  @click="showProfile">
-                            </div>
+                                <div class="contact-image">
+                                    <img src="img/profile.jpg"  @click="showProfile">
+                                </div>
 
-                        </li>
+                            </li>
 
-                        <li>
-                            <i class="fas fa-circle-notch"></i>
-                        </li>
+                            <li>
+                                <i class="fas fa-circle-notch"></i>
+                            </li>
 
-                        <li>
-                            <i class="fas fa-comment-alt"></i>
-                        </li>
+                            <li>
+                                <i class="fas fa-comment-alt"></i>
+                            </li>
 
-                        <li>
-                            <i class="fas fa-ellipsis-v"></i>
-                        </li>
-                    </ul>
-                
-                </nav>
+                            <li>
+                                <i class="fas fa-ellipsis-v"></i>
+                            </li>
+                        </ul>
+                    
+                    </nav>
 
-                <!-- Filter bar -->
-                <div class="wrapper-search-bar">
+                    <!-- Filter bar -->
+                    <div class="wrapper-search-bar">
 
-                    <div class="wrapper-icon">
-                        <i class="fas fa-search"></i>
+                        <div class="wrapper-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+
+                        <input type="text" id="text-filter-chat" placeholder="Cerca o inizia una nuova chat" v-model="filterKey">
+
                     </div>
 
-                    <input type="text" id="text-filter-chat" placeholder="Cerca o inizia una nuova chat" v-model="filterKey">
+                    <!-- Active chats list -->
+                    <ul class="wrapper-contacts">
 
-                </div>
+                        <!-- User preview -->
+                        <li @click="showChat(contact)" v-for="(contact,index) in filterChats" class="chat-preview" :class="(contact == activeUser) ? 'active' : ''">
 
-                <!-- Active chats list -->
-                <ul class="wrapper-contacts">
+                            <!-- Profile image -->
+                            <div class="contact-image">
+                                <img :src="contact.avatar">
+                            </div>
 
-                    <!-- User preview -->
-                    <li @click="showChat(contact)" v-for="(contact,index) in filterChats" class="chat-preview" :class="(contact == activeUser) ? 'active' : ''">
+                            <!-- Chat preview (chat name, last message and time) -->
+                            <div class="contact-preview">
 
-                        <!-- Profile image -->
-                        <div class="contact-image">
-                            <img :src="contact.avatar">
-                        </div>
+                                <div class="contact-chat">
 
-                        <!-- Chat preview (chat name, last message and time) -->
-                        <div class="contact-preview">
+                                    <div class="contact-name">
+                                        {{ contact.name }}     
+                                    </div>
 
-                            <div class="contact-chat">
+                                    <div v-if="contact.messages.length > 0" class="last-message">
+                                        {{ contact.messages | lastMessagePreview}}
+                                    </div>
 
-                                <div class="contact-name">
-                                    {{ contact.name }}     
                                 </div>
 
-                                <div class="last-message">
-                                    {{ userMessagePreview(contact) }}
+                                <div v-if="contact.messages.length > 0" class="date-preview">
+                                    {{ contact.messages | lastDatePreview }}
                                 </div>
 
                             </div>
 
-                            <div class="date-preview">
-                                {{ userDatePreview(contact) }}
-                            </div>
+                        </li>
 
-                        </div>
+                    </ul>
 
-                    </li>
-
-                </ul>
-
-            </aside> <!-- end sidebar menu -->
+                </aside> <!-- end sidebar menu -->
 
                 
-                <aside key="2" class="sidebar-menu" v-else>
+                <aside key="1" class="sidebar-menu" v-if="activeTab == 'userProfile'">
 
                     <div id="profile-heading">
                         <div class="heading-wrapper">
@@ -125,8 +125,8 @@
                     <div id="profile-name">
                         <span>Il tuo nome</span>
                         <div class="wrapper-profile-input">
-                            <input :class="(!nameEditable) ? '' : 'onfocus'" ref="profileName" type="text" v-model="profileName" id="profile-name-text" :readonly="(nameEditable) ? false : true">
-                            <i class="fas fa-pencil-alt" @click="editName" v-if="!nameEditable"></i>
+                            <input :class="(!userProfile.nameEditable) ? '' : 'onfocus'" ref="profileName" type="text" v-model="userProfile.name" id="profile-name-text" :readonly="(userProfile.nameEditable) ? false : true">
+                            <i class="fas fa-pencil-alt" @click="editName" v-if="!userProfile.nameEditable"></i>
                             <i class="fas fa-check" v-else  @click="editName"></i>
                         </div>
                     </div>
@@ -134,8 +134,8 @@
                     <div id="profile-status">
                         <span>Il tuo stato</span>
                         <div class="wrapper-profile-input">
-                            <input :class="(!statusEditable) ? '' : 'onfocus'" ref="profileStatus" type="text" v-model="profileStatus" id="profile-status-text" :readonly="(statusEditable) ? false : true">
-                            <i class="fas fa-pencil-alt" @click="editStatus" v-if="!statusEditable"></i>
+                            <input :class="(!userProfile.statusEditable) ? '' : 'onfocus'" ref="profileStatus" type="text" v-model="userProfile.profileStatus" id="profile-status-text" :readonly="(userProfile.statusEditable) ? false : true">
+                            <i class="fas fa-pencil-alt" @click="editStatus" v-if="!userProfile.statusEditable"></i>
                             <i class="fas fa-check" v-else  @click="editStatus"></i>
                         </div>
                     </div>

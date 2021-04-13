@@ -46,6 +46,7 @@ body {
 #app.wrapper-web {
 
     height: 95vh;
+    position: relative;
     width: 90%;
     background-color: #f8f9fa; 
     box-shadow: 0 0 4px #676767;
@@ -509,8 +510,26 @@ body {
 
 /* test menu transition */
 
+.slide-enter-active, .slide-leave-active {
+    transition: all .3s;
+}
 
- .slide-fade-enter-active, .slide-fade-leave-active {
+.slide-enter-to, .slide-leave {
+
+    opacity: 1;
+    position: absolute;
+    width: 30%;
+}
+
+.slide-leave-to, .slide-enter {
+    opacity: 0;
+    width: 0;
+}
+
+
+
+
+ /* .slide-fade-enter-active, .slide-fade-leave-active {
     transition: all .3s ease-in-out;
   }
 
@@ -527,7 +546,7 @@ body {
   .slide-fade-enter-to, .slide-fade-leave {
 
     opacity: 1;
-  }
+  } */
 
 
  
