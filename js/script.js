@@ -136,6 +136,7 @@ function initVue() {
             "profileUser" : false,
             "messageText" : "",
             "filterKey" : "",
+            "filterInput" : ""
         },
 
         methods: {
@@ -301,6 +302,8 @@ function initVue() {
             }
         },
 
+        
+
         computed: {
 
             // Filter chats function
@@ -316,8 +319,12 @@ function initVue() {
         updated() {
 
             // Still doens't recognize absolute menù
-            const container = this.$el.querySelector("#wrapper-messages");
-            container.scrollTop = container.scrollHeight;      
+            if (this.activeContact) { 
+
+                const container = this.$el.querySelector("#wrapper-messages");
+                container.scrollTop = container.scrollHeight; 
+            }
+                 
         }
 
     })
