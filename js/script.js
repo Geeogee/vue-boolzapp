@@ -330,10 +330,13 @@ function initVue() {
                 return lastMessageDate.slice(11,16);
             },
 
+            
             highlight: function(name, filterKey) {
 
-                let check = new RegExp(filterKey, "ig");
-                return name.toString().replace(check, function(check){
+                // i = case insensitive
+                // g = global doesn't stop the search at the first occurence
+                let check = new RegExp(filterKey, "ig"); 
+                return name.replace(check, function(check){
                     
                     return `<span class="highlight">${check}</span>`;
                 });
