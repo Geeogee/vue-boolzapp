@@ -194,6 +194,12 @@ body {
     font-weight: 400; 
 }
 
+.contact-chat > .contact-name > .highlight {
+
+    color: #009688;
+    font-weight: 600;
+}
+
 /* SIDEBAR PROFILE */
 
 #profile-heading {
@@ -379,7 +385,7 @@ body {
     flex-direction: column;
     background-image: url("../img/doodle-wallpaper.png");
     background-size: 50%;
-    background-repeat: repeat-x;
+    background-repeat: repeat;
 }
 
 .message {
@@ -521,11 +527,10 @@ body {
     width: 30%;
 }
 
-
 .slide-enter-active {
     animation: slide-in .2s;
   }
-  .slide-leave-active {
+.slide-leave-active {
     animation: slide-in .2s reverse;
   }
 

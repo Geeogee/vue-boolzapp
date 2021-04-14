@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
 
@@ -20,93 +21,69 @@
     <script src="js/script.js"></script>
 
 </head>
+
 <body>
 
     <div class="container">
 
         <div id="app" class="wrapper-web">
-
             <!-- Sidebar menu -->
-            
-                <aside key="0" class="sidebar-menu intro-tab">
-                    
-                    <!-- Profile -->
-                    <nav class="menu-nav-links">
-
-                        <ul class="nav-links">
-                            <li id="profile-image">
-
-                                <div class="contact-image">
-                                    <img src="img/profile.jpg"  @click="showProfile">
-                                </div>
-
-                            </li>
-
-                            <li>
-                                <i class="fas fa-circle-notch"></i>
-                            </li>
-
-                            <li>
-                                <i class="fas fa-comment-alt"></i>
-                            </li>
-
-                            <li>
-                                <i class="fas fa-ellipsis-v"></i>
-                            </li>
-                        </ul>
-                    
-                    </nav>
-
-                    <!-- Filter bar -->
-                    <div class="wrapper-search-bar">
-
-                        <div class="wrapper-icon">
-                            <i class="fas fa-search"></i>
-                        </div>
-
-                        <input type="text" id="text-filter-chat" placeholder="Cerca o inizia una nuova chat" v-model="filterKey">
-
-                    </div>
-
-                    <!-- Active chats list -->
-                    <ul class="wrapper-contacts">
-
-                        <!-- User preview -->
-                        <li @click="showChat(contact)" v-for="(contact,index) in filterChats" class="chat-preview" :class="(contact == activeUser) ? 'active' : ''">
-
-                            <!-- Profile image -->
+            <aside key="0" class="sidebar-menu intro-tab">
+                <!-- Profile -->
+                <nav class="menu-nav-links">
+                    <ul class="nav-links">
+                        <li id="profile-image">
                             <div class="contact-image">
-                                <img :src="contact.avatar">
+                                <img src="img/profile.jpg" @click="showProfile">
                             </div>
-
-                            <!-- Chat preview (chat name, last message and time) -->
-                            <div class="contact-preview">
-
-                                <div class="contact-chat">
-
-                                    <div class="contact-name">
-                                        {{ contact.name }}     
-                                    </div>
-
-                                    <div v-if="contact.messages.length > 0" class="last-message">
-                                        {{ contact.messages | lastMessagePreview}}
-                                    </div>
-
-                                </div>
-
-                                <div v-if="contact.messages.length > 0" class="date-preview">
-                                    {{ contact.messages | lastDatePreview }}
-                                </div>
-
-                            </div>
-
                         </li>
-
+                        <li>
+                            <i class="fas fa-circle-notch"></i>
+                        </li>
+                        <li>
+                            <i class="fas fa-comment-alt"></i>
+                        </li>
+                        <li>
+                            <i class="fas fa-ellipsis-v"></i>
+                        </li>
                     </ul>
+                </nav>
+                <!-- Filter bar -->
+                <div class="wrapper-search-bar">
+                    <div class="wrapper-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <input type="text" id="text-filter-chat" placeholder="Cerca o inizia una nuova chat"
+                        v-model="filterKey">
+                </div>
+                <!-- Active chats list -->
+                <ul class="wrapper-contacts">
+                    <!-- User preview -->
+                    <li @click="showChat(contact)" v-for="(contact,index) in filterChats" class="chat-preview"
+                        :class="(contact == activeUser) ? 'active' : ''">
+                        <!-- Profile image -->
+                        <div class="contact-image">
+                            <img :src="contact.avatar">
+                        </div>
+                        <!-- Chat preview (chat name, last message and time) -->
+                        <div class="contact-preview">
+                            <div class="contact-chat">
+                                <div v-html="$options.filters.highlight(contact.name, filterKey)" class="contact-name">
+                                    {{ contact.name }}
+                                </div>
+                                <div v-if="contact.messages.length > 0" class="last-message">
+                                    {{ getLastMessage(contact.messages) | messagePreview }}
+                                </div>
+                            </div>
+                            <div v-if="contact.messages.length > 0" class="date-preview">
+                                {{  getLastMessageDate(contact.messages) | showHours }}
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </aside> <!-- end sidebar menu -->
 
-                </aside> <!-- end sidebar menu -->
-
-                <transition name="slide">
+            <transition name="slide">
                 <aside key="1" class="sidebar-menu profile-tab" v-if="activeTab == 'userProfile'">
 
                     <div id="profile-heading">
@@ -125,132 +102,114 @@
                     <div id="profile-name">
                         <span>Il tuo nome</span>
                         <div class="wrapper-profile-input">
-                            <input :class="(!userProfile.nameEditable) ? '' : 'onfocus'" ref="profileName" type="text" v-model="userProfile.name" id="profile-name-text" :readonly="(userProfile.nameEditable) ? false : true">
+                            <input :class="(!userProfile.nameEditable) ? '' : 'onfocus'" ref="profileName" type="text"
+                                v-model="userProfile.name" id="profile-name-text"
+                                :readonly="(userProfile.nameEditable) ? false : true">
                             <i class="fas fa-pencil-alt" @click="editName" v-if="!userProfile.nameEditable"></i>
-                            <i class="fas fa-check" v-else  @click="editName"></i>
+                            <i class="fas fa-check" v-else @click="editName"></i>
                         </div>
                     </div>
 
                     <div id="profile-status">
                         <span>Il tuo stato</span>
                         <div class="wrapper-profile-input">
-                            <input :class="(!userProfile.statusEditable) ? '' : 'onfocus'" ref="profileStatus" type="text" v-model="userProfile.profileStatus" id="profile-status-text" :readonly="(userProfile.statusEditable) ? false : true">
+                            <input :class="(!userProfile.statusEditable) ? '' : 'onfocus'" ref="profileStatus"
+                                type="text" v-model="userProfile.profileStatus" id="profile-status-text"
+                                :readonly="(userProfile.statusEditable) ? false : true">
                             <i class="fas fa-pencil-alt" @click="editStatus" v-if="!userProfile.statusEditable"></i>
-                            <i class="fas fa-check" v-else  @click="editStatus"></i>
+                            <i class="fas fa-check" v-else @click="editStatus"></i>
                         </div>
                     </div>
-                    
                 </aside>
             </transition>
 
             <!-- Active chat -->
             <div class="wrapper-chats" v-if="activeUser">
-
                 <div class="chat-bar top-bar">
-
                     <ul class="user-info">
                         <li class="contact-image">
                             <img :src="activeUser.avatar">
                         </li>
-
                         <li class="contact-name">
                             {{ activeUser.name }}
                         </li>
-
                         <li>
                             <i class="fas fa-search"></i>
                         </li>
-
                         <li>
                             <i class="fas fa-ellipsis-v"></i>
                         </li>
                     </ul>
- 
                 </div>
 
-                <div id="wrapper-messages" class="messages" @click="closeAll" >
-
-                    <div @click.stop @mouseenter="showChevron(message)" @mouseleave="hideChevron(message)" v-for="(message,index) in activeUser.messages" class="message" :class="(message.status == 'received') ? 'received' : 'sent'">
-                        
+                <div id="wrapper-messages" class="messages" @click="closeAll">
+                    <div @click.stop @mouseenter="showChevron(message)" @mouseleave="hideChevron(message)"
+                        v-for="(message,index) in activeUser.messages" class="message"
+                        :class="(message.status == 'received') ? 'received' : 'sent'">
                         <div>
                             {{ message.text }}
                         </div>
-                        
                         <div class="wrapper-message-infos">
                             <div class="message-hour" :class="(message.chevron) ? 'hide' : ''">
-                                {{ message.date.slice(11,16)}}
+                                {{ message.date | showHours }}
                             </div>
+                            <i :class="(message.chevron) ? 'fas fa-chevron-down active' : 'fas fa-chevron-down'"
+                                @click="showMessageInfo(message,index)"></i>
 
-                            <i :class="(message.chevron) ? 'fas fa-chevron-down active' : 'fas fa-chevron-down'" @click="showMessageInfo(message,index)"></i>
-                            
                             <div :class="(message.info) ? 'message-info active' : 'message-info'">
                                 <ul>
                                     <li @click="removeMessage(index)">Elimina messaggio</li>
                                 </ul>
                             </div>
                         </div>
-                        
                     </div>
-
                 </div>
 
                 <div class="chat-bar bottom-bar">
-
                     <ul class="chat-actions">
                         <li>
                             <i class="far fa-laugh-beam"></i>
                         </li>
-
                         <li>
                             <i class="fas fa-paperclip"></i>
                         </li>
-
                         <li id="wrapper-message-box">
-                            <input type="text" ref="messageText" v-model="messageText" placeholder="Scrivi un messaggio" @keyup.enter="sendMessage">
+                            <input type="text" ref="messageText" v-model="messageText" placeholder="Scrivi un messaggio"
+                                @keyup.enter="sendMessage">
                         </li>
-
                         <li>
                             <i class="fas fa-microphone"></i>
                         </li>
-
                         <li id="wrapper-send-message">
-                            <svg @click="sendMessage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="send-message">
-                                <path fill="currentColor" d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z">
+                            <svg @click="sendMessage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                id="send-message">
+                                <path fill="currentColor"
+                                    d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z">
                                 </path>
                             </svg>
                             <!-- <i class="fas fa-paper-plane"></i> -->
                         </li>
                     </ul>
-
                 </div>
-
             </div>
-
             <!-- Intro (no active chat) -->
             <div v-else class="wrapper-chats empty">
-
                 <div class="wrapper-intro">
-
                     <img src="img/keep-connected.jpg">
-
                     <h2>Mantieni il telefono connesso</h2>
-
                     <span>
-                        Whatsapp si collega al tuo telefono per sincronizzare i messaggi. Per ridurre l'utilizzo dei dati, collega il telefono al Wi-Fi.
+                        Whatsapp si collega al tuo telefono per sincronizzare i messaggi. Per ridurre l'utilizzo dei
+                        dati, collega il telefono al Wi-Fi.
                     </span>
-
                     <div id="download-link">
                         <i class="fas fa-laptop"></i>
-                        Whatsapp è disponibile per Windows. 
+                        Whatsapp è disponibile per Windows.
                         <a href="#">Scaricala qui</a>.
                     </div>
-
                 </div>
-
             </div>
-            
         </div>
-    </div>  
-    
+    </div>
 </body>
+
 </html>

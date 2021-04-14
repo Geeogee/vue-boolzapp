@@ -300,25 +300,45 @@ function initVue() {
                     this.$nextTick( () => this.$refs.profileStatus.focus())
                 }
                 
-            }
+            },
+
+            getLastMessage: function(messages) {
+
+                const lastMessage = messages[messages.length-1].text;
+                return lastMessage
+            },
+
+            getLastMessageDate: function(messages) {
+
+                const lastMessageDate = messages[messages.length-1].date;
+                return lastMessageDate;
+            },
+
         },
 
 
         // Functions used to format text
         filters: {
 
-            lastMessagePreview: function(messages) {
+            messagePreview: function(lastMessage) {
 
-                const lastMessage = messages[messages.length-1].text;
-                return lastMessage.slice(0,15);
-                
+                return lastMessage.slice(0,15);    
             },
 
-            lastDatePreview: function(messages) {
+            showHours: function(lastMessageDate) {
 
-                const lastMessageDate = messages[messages.length - 1].date;
                 return lastMessageDate.slice(11,16);
+            },
+
+            highlight: function(name, filterKey) {
+
+                let check = new RegExp(filterKey, "ig");
+                return name.toString().replace(check, function(check){
+                    
+                    return `<span class="highlight">${check}</span>`;
+                });
             }
+
         },
 
         computed: {
